@@ -1,0 +1,21 @@
+"nome_do_site" : {
+    "url": "https://link_exemplo.com",
+    "inputEmail": "[name='email']",
+    "inputPassword": "[name='password']",
+    "buttonSubmit": "[type='submit']",
+    "msgError": "mensagem de erro de login"
+}
+
+obs: coloque esse modelo em config.js
+
+
+
+
+
+
+
+case "nome_do_site":
+    config = dataParse.nome_do_site;
+    break;
+
+obs: coloque esse modelo de codigo no switch de loadConfig() que esta em index.js

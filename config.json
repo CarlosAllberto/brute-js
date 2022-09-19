@@ -1,0 +1,17 @@
+{
+    "facebook" : {
+        "url": "https://facebook.com",
+        "inputEmail": "[name='email']",
+        "inputPassword": "[name='pass']",
+        "buttonSubmit": "[name='login']",
+        "msgError": "A senha inserida está incorreta."
+    },
+
+    "pinterest" : {
+        "url": "https://br.pinterest.com/login/",
+        "inputEmail": "[name='id']",
+        "inputPassword": "[name='password']",
+        "buttonSubmit": "[type='submit']",
+        "msgError": "A senha que você inseriu está incorreta."
+    }
+}
