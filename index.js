@@ -10,7 +10,13 @@ const parser = new ArgumentParser({
 });
 
 const banner = `
-  BANNER
+█████████
+█▄█████▄█
+█▼▼▼▼▼
+█      Author: CarlosAllberto
+█▲▲▲▲▲
+█████████
+_ ██____██___
 `;
 
 parser.add_argument("-s", "--site",  { help: "facebook, instagram, google" });
