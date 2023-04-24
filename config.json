@@ -1,10 +1,18 @@
 {
     "facebook" : {
-        "url": "https://facebook.com",
+        "url": "https://www.facebook.com",
         "inputEmail": "[name='email']",
         "inputPassword": "[name='pass']",
         "buttonSubmit": "[name='login']",
-        "msgError": "A senha inserida está incorreta."
+        "msgError": "Forgot Password?"
+    },
+
+    "instagram" : {
+        "url": "https://www.instagram.com/",
+        "inputEmail": "[name='username']",
+        "inputPassword": "[name='password']",
+        "buttonSubmit": "[class='_acan _acap _acas _aj1-']",
+        "msgError": "Sorry, your password was incorrect. Please double-check your password."
     },
 
     "pinterest" : {
